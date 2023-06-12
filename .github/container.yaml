@@ -1,0 +1,29 @@
+on:
+  push:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build_conainer:
+    runs-on: ubuntu-latest
+    name: buildContainer
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.GITHUB_REF_NAME}}
+      - name: buildDockerfile
+        run: |
+          docker build  -t ubuntuCloudcamp:1.0.0 .
+      - name: "Login to GitHub Container Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner}}
+          password: ${{ secrets.GITHUBTOKEN }}
+      - name: deployment
+        run: |
+          docker tag: ubuntuCloudcamp:1.0.0 ghcr.io/juancrespo25/ubuntuCloudcamp:latest
+          docker push ghcr.io/juancrespo25/ubuntuCloudcamp:latest
