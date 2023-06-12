@@ -25,5 +25,5 @@ jobs:
           password: ${{ secrets.GITHUBTOKEN }}
       - name: deployment
         run: |
-          docker tag: ubuntucloudcamp:1.0.0 ghcr.io/juancrespo25/ubuntucloudcamp:latest
+          docker tag ubuntucloudcamp:1.0.0 ghcr.io/juancrespo25/ubuntucloudcamp:latest
           docker push ghcr.io/juancrespo25/ubuntucloudcamp:latest
